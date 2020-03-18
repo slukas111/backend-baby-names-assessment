@@ -36,15 +36,16 @@ Suggested milestones for incremental development:
 """
 
 
-def extract_names(filename):
-    names = []
-    with open(filename, 'r') as file:
+# def extract_names(filename):
+#     #names = []
+with open('baby1990.html', 'r') as file:
         text = file.read()
-        year_match = re.search(r'Popularity\sin\s(\d\d\d\d)', text)
-    if not year_match:
-        return year_match
-        print(names)
+        print(text)
+    #     year_match = re.search(r'Popularity\sin\s(\d\d\d\d)', text)
+    # if not year_match:
+    #     return year_match
+    #     print(names)
 
 
-if __name__ == '__main__':
-    main(sys.argv[1:])
+# if __name__ == '__main__':
+#     main(sys.argv[1:])
