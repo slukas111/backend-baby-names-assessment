@@ -39,49 +39,11 @@ Suggested milestones for incremental development:
 def extract_names(filename):
     names = []
     with open(filename, 'r') as file:
-        match = re.search(r'Popularity in (\w+)', filename())
-    year = [match.group(1)] 
-    # +++your code here+++
-    return names
-
-    """
-    Given a single file name for babyXXXX.html, returns a single list starting
-    with the year string followed by the name-rank strings in alphabetical order.
-    ['2006', 'Aaliyah 91', Aaron 57', 'Abagail 895', ' ...]
-    """
-
-def create_parser():
-    """Create a cmd line parser object with 2 argument definitions"""
-    parser = argparse.ArgumentParser(description="Extracts and alphabetizes baby names from html.")
-    parser.add_argument(
-        '--summaryfile', help='creates a summary file', action='store_true')
-    # The nargs option instructs the parser to expect 1 or more filenames.
-    # It will also expand wildcards just like the shell, e.g. 'baby*.html' will work.
-    parser.add_argument('files', help='filename(s) to parse', nargs='+')
-    return parser
-
-
-def main(args):
-    # Create a command-line parser object with parsing rules
-    parser = create_parser()
-    # Run the parser to collect command-line arguments into a NAMESPACE called 'ns'
-    ns = parser.parse_args(args)
-
-    if not ns:
-        parser.print_usage()
-        sys.exit(1)
-
-    file_list = ns.files
-
-    # option flag
-    create_summary = ns.summaryfile
-
-    # For each filename, call `extract_names` with that single file.
-    # Format the resulting list a vertical list (separated by newline \n)
-    # Use the create_summary flag to decide whether to print the list,
-    # or to write the list to a summary file e.g. `baby1990.html.summary`
-
-    # +++your code here+++
+        text = file.read()
+        year_match = re.search(r'Popularity\sin\s(\d\d\d\d)', text)
+    if not year_match:
+        return year_match
+        print(names)
 
 
 if __name__ == '__main__':
