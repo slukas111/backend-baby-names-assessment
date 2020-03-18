@@ -38,14 +38,35 @@ Suggested milestones for incremental development:
 
 def extract_names(filename):
     #names = []
-    with open('baby1990.html', 'r') as file:
-        for line in file:
-            print(line, end ="")
+    with open(filename, 'r') as file:
+        # for line in file:
+        #     print(line, end ="")
+        match = re.search(r'Popularity\sin\s(\d\d\d\d)', file.read())
+    year = [match.group(1)]
 
-    #     year_match = re.search(r'Popularity\sin\s(\d\d\d\d)', text)
+    with open(filename, 'r') as file:
+
+        match_all = re.findall(r'<td>(\d+)</td><td>(\w+)</td><td>(\w+)</td>', file.read())
+    year = [match.group(1)]
+
+    """finding and organizing the names by gender boy or girl only"""
+    for tup in match_all:
+        male = tup[1] + ' ' + tup[0]
+        female = tup[2] + ' ' + tup[0]
+        year.append(male)
+        year.append(female)
+
+    return sorted(year)
+
     # if not year_match:
     #     return year_match
-    #     print(names)
+def main():
+
+    args = sys.args[1:]
+
+    if not args:
+        print('usage:[--summaryfile] file [file ...]')
+        sys.exit(1)
 
 
 # if __name__ == '__main__':
