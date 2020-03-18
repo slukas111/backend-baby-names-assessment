@@ -61,13 +61,26 @@ def extract_names(filename):
     # if not year_match:
     #     return year_match
 def main():
-
-    args = sys.args[1:]
+    args = sys.argv[1:]
 
     if not args:
-        print('usage:[--summaryfile] file [file ...]')
+        print('usage: [--summaryfile] file [file ...]')
         sys.exit(1)
 
+    summary = False
+    if args[0] == '--summaryfile':
+        summary = True
+        del args[0]
 
-# if __name__ == '__main__':
-#     main(sys.argv[1:])
+    summaryname = ''
+    for name in args:
+        summaryname+= '\n'.join(extract_names(name)) + '\n'
+        if summary:
+            with open('%s.summary' % name, 'w+') as file:
+                file.write(summaryname)
+                summaryname = ''
+    print(summaryname)
+    return summaryname
+
+if __name__ == '__main__':
+    main()
