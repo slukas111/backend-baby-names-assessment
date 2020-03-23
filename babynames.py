@@ -10,9 +10,12 @@
 # Google's Python Class
 # http://code.google.com/edu/languages/google-python-class/
 
+__author__ = "Sasha with youtube"
+
 import sys
 import re
 import argparse
+
 
 """
 Define the extract_names() function below and change main()
@@ -37,16 +40,17 @@ Suggested milestones for incremental development:
 
 
 def extract_names(filename):
-    #names = []
+    # names = []
     with open(filename, 'r') as file:
         # for line in file:
         #     print(line, end ="")
         match = re.search(r'Popularity\sin\s(\d\d\d\d)', file.read())
+
     year = [match.group(1)]
 
-    with open(filename, 'r') as file:
+    # with open(filename, 'r') as file:
 
-        match_all = re.findall(r'<td>(\d+)</td><td>(\w+)</td><td>(\w+)</td>', file.read())
+    match_all = re.findall(r'<td>(\d+)</td><td>(\w+)</td><td>(\w+)</td>', file.read())
     year = [match.group(1)]
 
     """finding and organizing the names by gender boy or girl only"""
@@ -60,10 +64,17 @@ def extract_names(filename):
 
     # if not year_match:
     #     return year_match
-def main():
-    args = sys.argv[1:]
+def create_parser():
+    parser = argparse.ArgumentParser(description="Extracts and alphabetizes baby names from HTML")
+    parser.add_argument('--summaryfile', help='create a summary file', action="store_true")
+    parser.add_argument('files', help='filename(s) to parse', nargs='+')
+    return parser
 
-    if not args:
+def main(args):
+    parser = create_parser()
+    ns = parser.parse_args(args)
+
+    if not ns:
         print('usage: [--summaryfile] file [file ...]')
         sys.exit(1)
 
@@ -74,7 +85,7 @@ def main():
 
     summaryname = ''
     for name in args:
-        summaryname+= '\n'.join(extract_names(name)) + '\n'
+        summaryname += '\n'.join(extract_names(name)) + '\n'
         if summary:
             with open('%s.summary' % name, 'w+') as file:
                 file.write(summaryname)
